@@ -1,0 +1,2 @@
+module TrackingPrompt
+TrackingPromptPlugin 1.0 TrackingPromptPlugin.qml
