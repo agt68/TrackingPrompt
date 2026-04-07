@@ -1,14 +1,19 @@
 import QtQuick 2.14
 import QtQuick.Controls 2.14
+import QtPositioning 5.14
 
 Item {
     id: plugin
 
-    Connections {
-        target: iface
-        function onProjectOpened() {
-            trackingDialog.open()
-        }
+    // GPS-Quelle (QField-kompatibel)
+    PositionSource {
+        id: positionSource
+        active: false
+    }
+
+    // Wird beim Laden des Plugins ausgeführt (statt onProjectOpened)
+    Component.onCompleted: {
+        trackingDialog.open()
     }
 
     Dialog {
@@ -26,12 +31,11 @@ Item {
         standardButtons: Dialog.Yes | Dialog.No
 
         onAccepted: {
-            iface.startPositionTracking()
+            positionSource.active = true
         }
 
         onRejected: {
             trackingDialog.close()
         }
     }
-} 
-
+}
